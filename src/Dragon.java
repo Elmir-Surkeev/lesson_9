@@ -1,30 +1,6 @@
+import java.util.Random;
+
 public class Dragon {
-    private int hp;
-    private int defence;
-    private int attack;
-
-    private int weapon;
-
-    public int getDefence() {
-        return defence;
-    }
-
-    public int getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(int weapon) {
-        this.weapon = weapon;
-    }
-
-    public int getAttack() {
-        return attack;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
     public int getHp() {
         return hp;
     }
@@ -33,26 +9,33 @@ public class Dragon {
         this.hp = hp;
     }
 
-    public Dragon(int hp, int defence, int attack, int weapon){
-        this.hp = hp;
-        this.defence = defence;
-        this.attack = attack;
-        this.weapon = weapon;
+    public int getDefence() {
+        return defence;
     }
 
     public void setDefence(int defence) {
         this.defence = defence;
     }
-    public void attackHero(Hero hero){
-        if (this.hp>0){
-            int damageHero = hero.getAtack()+ hero.getWeapon()+this.defence;
-            this.hp-=damageHero;
-            System.out.println("Жизнь Дракона после атаки Героя в "+ damageHero+" осталась = " + this.hp);
-            hero.attackDragon(hero);
-        }else if (this.hp<0){
-            System.out.println("Герой победил Дракона");
-        }else {
-            System.out.println("Произошла ошибка в ходе игры, зайдите заново");
+
+    private int hp;
+    private int defence;
+    private int strenth;
+    private int orugie;
+    public Dragon(int hp, int defence, int strenth, int orugie){
+        this.hp = hp;
+        this.defence = defence;
+        this.strenth = strenth;
+        this.orugie = orugie;
+    }
+    public void startDragonAttack(Hero hero){
+        Random random = new Random();
+        int probablityAtackHero = random.nextInt(((1-1)+1)+1);
+        if (probablityAtackHero>0){
+            int damage = this.strenth+this.orugie- hero.getDefence();
+            hero.setHp(hero.getHp()-damage);
+            System.out.println("После атаки Dragon "+ "у Hero осталось : " + hero.getHp());
+        }else if(probablityAtackHero<=0){
+            System.out.println("Dragon  решил не атаковать");
         }
     }
 }
