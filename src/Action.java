@@ -13,57 +13,68 @@ public class Action {
     }
 
     public void startGame() {
-        damageToDragon();
+        while (this.dragon.getHp() > 0 && this.hero.getHp() > 0) {
+            choiceToDo();
+        }
     }
 
     public void choiceToDo(){
         System.out.println("Выберите что будет делать герой");
-        System.out.println("1:атаковать врага, 2: дать фору, 3: применить щит");
+        System.out.println("1: атаковать врага, 2: ничего не делать, 3: применить щит");
         int choice = scanner.nextInt();
-        switch (choice){
+
+        switch (choice) {
             case 1:
+                damageToDragon();
+                if (this.dragon.getHp() <= 0) {
+                    System.out.println("Герой победил");
+                    return;
+                }
                 damageToHero();
+                if (this.hero.getHp() <= 0) {
+                    System.out.println("Дракон победил");
+                    return;
+                }
+                break;
             case 2:
-                System.out.println("Нападай я подожду");
+                System.out.println("Герой ничего не делает.");
+                damageToHero();
+                if (this.hero.getHp() <= 0) {
+                    System.out.println("Дракон победил");
+                    return;
+                }
+                break;
             case 3:
                 applyShield();
+                break;
             default:
-                System.out.println("Выходит ошибка, выберите 1,2,3");
+                System.out.println("Неверный выбор, выберите 1, 2 или 3");
+                choiceToDo(); // Повторить выбор
         }
+    }
 
+    public void applyShield() {
+        hero.setDefence(hero.getDefence() + hero.getShield());
+        System.out.println("Защита = " + hero.getDefence());
+        damageToHero();
     }
-    public void applyShield(){
-        hero.setDefence(hero.getDefence()+hero.getShield());
-    }
+
     private void damageToDragon() {
         int damageHero = getDamageHero();
-        while (true) {
-            int randomHeroAttack = rnd.nextInt(4);
-            if (this.dragon.getHp() <= 0) {
-                System.out.println("Герой победил");
-                break;
-            }
-            if (this.hero.getHp() <= 0) {
-                System.out.println("Дракон победил");
-                break;
-            }
-            if (randomHeroAttack == 3) {
-                System.out.println("Герой промахнулся");
-                //damageToHero();
-                choiceToDo();
-                continue;
-            }
-            if (this.dragon.getHp() < damageHero) {
-                this.dragon.setHp(0);
-            } else {
-                this.dragon.setHp(this.dragon.getHp() - damageHero);
-                System.out.println("Герой нанес урон по дракону " + damageHero);
-                System.out.println("Осталось хп у дракона " + dragon.getHp());
-                System.out.println("================");
-                //damageToHero();
-                choiceToDo();
-            }
-
+        int randomHeroAttack = rnd.nextInt(4);
+        if (randomHeroAttack == 3) {
+            System.out.println("Герой промахнулся");
+            damageToHero();
+            return;
+        }
+        if (this.dragon.getHp() <= damageHero) {
+            this.dragon.setHp(0);
+            System.out.println("Герой нанес урон по дракону " + damageHero);
+            System.out.println("Дракон повержен.");
+        } else {
+            this.dragon.setHp(this.dragon.getHp() - damageHero);
+            System.out.println("Герой нанес урон по дракону " + damageHero);
+            System.out.println("Осталось хп у дракона " + dragon.getHp());
         }
     }
 
@@ -77,12 +88,13 @@ public class Action {
             System.out.println("Дракон не стал атаковать");
             return;
         }
-        if (this.hero.getHp() < damageDragon) {
+        if (this.hero.getHp() <= damageDragon) {
             this.hero.setHp(0);
-        } else {
-            System.out.println("Дракон атакует !!");
-            this.hero.setHp(this.hero.getHp() - damageDragon);
             System.out.println("Дракон нанес урона герою " + damageDragon);
+            System.out.println("Герой повержен.");
+        } else {
+            this.hero.setHp(this.hero.getHp() - damageDragon);
+            System.out.println("Дракон атакует и наносит урон герою " + damageDragon);
             System.out.println("Осталось хп у героя " + hero.getHp());
         }
     }
