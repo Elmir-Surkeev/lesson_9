@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Dragon {
+public class Gonchaya {
     public int getHp() {
         return hp;
     }
@@ -22,22 +22,22 @@ public class Dragon {
     private int defence;
     private int strenth;
     private int orugie;
-    public Dragon(int hp, int defence, int strenth, int orugie){
+    public Gonchaya(int hp, int defence, int strenth, int orugie){
         this.hp = hp;
         this.defence = defence;
         this.strenth = strenth;
         this.orugie = orugie;
     }
 
-    public void startDragonAttack(Hero hero){
+    public void startGonchayaAttack(Hero hero){
         Random random = new Random();
         int probablityAtackHero = random.nextInt(2);
         if (probablityAtackHero>0){
             int damage = this.strenth+this.orugie- hero.getDefence();
             hero.setHp(hero.getHp()-damage);
-            System.out.println("После атаки Dragon в "+(this.strenth+this.orugie)+ "у Hero осталось : " + hero.getHp());
+            System.out.println("После атаки Gonchaya в "+(this.strenth+this.orugie)+ "у Hero осталось : " + hero.getHp());
         }else if(probablityAtackHero<=0){
-            System.out.println("Dragon  решил не атаковать");
+            System.out.println("Gonchaya  решил не атаковать");
         }
     }
 }
