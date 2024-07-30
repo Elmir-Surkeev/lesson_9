@@ -3,7 +3,7 @@ public class Main {
     public static void main(String[] args) {
             Random random = new Random();
             int probablityDragonOrGonchaya = random.nextInt(2);
-            if (probablityDragonOrGonchaya<2){
+            if (probablityDragonOrGonchaya<1){
                 startGame();
             }else {
                 startGameGonchaya();
@@ -12,9 +12,10 @@ public class Main {
     public static void startGameGonchaya(){
         Hero hero = new Hero(1000, 100, 120, 250, 150);
         Gonchaya gonchaya = new Gonchaya(2500, 1000, 250, 50);
+        //////////////////////////
         for (int i=0; i<15; i++){
             if (gonchaya.getHp()>0 && hero.getHp() > 0){
-                //hero.startHeroAttack(gonchaya);
+                hero.startHeroForGonchaya(gonchaya);
                 gonchaya.startGonchayaAttack(hero);
             }else if (gonchaya.getHp()<0){
                 System.out.println("Игра закончена победил Hero");
