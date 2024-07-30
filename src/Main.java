@@ -3,7 +3,7 @@ public class Main {
     public static void main(String[] args) {
             Random random = new Random();
             int probablityDragonOrGonchaya = random.nextInt(2);
-            if (probablityDragonOrGonchaya<1){
+            if (probablityDragonOrGonchaya<=1){
                 startGame();
             }else {
                 startGameGonchaya();
